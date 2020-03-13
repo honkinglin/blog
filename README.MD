@@ -1,3 +1,6 @@
-# Blog
+# 前端进阶积累
 
-[个人博客](https://github.com/HQ-Lin/blog/issues)
+本项目用于记录前端进阶路上积累的知识点，前端进阶路漫漫...
+希望我们一同进步...
+
+[记录站点](https://hq-lin.github.io/blog/)
