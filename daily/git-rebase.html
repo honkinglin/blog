@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>使用 git rebase 合并多个 commit | 前端进阶之路</title>
+    <meta name="description" content="条条大路通罗马">
+    <meta name="generator" content="VuePress 1.3.1">
+    <link rel="icon" href="/blog/favicon.ico">
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.f4b3f09e.css" as="style"><link rel="preload" href="/blog/assets/js/app.bec953ce.js" as="script"><link rel="preload" href="/blog/assets/js/2.18d4f854.js" as="script"><link rel="preload" href="/blog/assets/js/9.8a97dc03.js" as="script"><link rel="prefetch" href="/blog/assets/js/10.c066296d.js"><link rel="prefetch" href="/blog/assets/js/11.161d9ffa.js"><link rel="prefetch" href="/blog/assets/js/12.fb50bce0.js"><link rel="prefetch" href="/blog/assets/js/13.753ae177.js"><link rel="prefetch" href="/blog/assets/js/14.ff1844c9.js"><link rel="prefetch" href="/blog/assets/js/15.abe7bccd.js"><link rel="prefetch" href="/blog/assets/js/3.ab8c4dbe.js"><link rel="prefetch" href="/blog/assets/js/4.cffed92c.js"><link rel="prefetch" href="/blog/assets/js/5.a7e42074.js"><link rel="prefetch" href="/blog/assets/js/6.ee3083fb.js"><link rel="prefetch" href="/blog/assets/js/7.39857d3e.js"><link rel="prefetch" href="/blog/assets/js/8.ddcb1b74.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.f4b3f09e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog/" class="home-link router-link-active"><!----> <span class="site-name">前端进阶之路</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog/web_pieces/" class="nav-link">
+  前端积累
+</a></div><div class="nav-item"><a href="/blog/arithmetic/" class="nav-link">
+  算法积累
+</a></div><div class="nav-item"><a href="/blog/daily/" class="nav-link router-link-active">
+  日常积累
+</a></div><div class="nav-item"><a href="/blog/about/" class="nav-link">
+  关于我
+</a></div><div class="nav-item"><a href="https://github.com/HQ-Lin" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/blog/web_pieces/" class="nav-link">
+  前端积累
+</a></div><div class="nav-item"><a href="/blog/arithmetic/" class="nav-link">
+  算法积累
+</a></div><div class="nav-item"><a href="/blog/daily/" class="nav-link router-link-active">
+  日常积累
+</a></div><div class="nav-item"><a href="/blog/about/" class="nav-link">
+  关于我
+</a></div><div class="nav-item"><a href="https://github.com/HQ-Lin" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/blog/daily/git-rebase.html" class="active sidebar-link">使用 git rebase 合并多个 commit</a><ul class="sidebar-sub-headers"></ul></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="使用-git-rebase-合并多个-commit"><a href="#使用-git-rebase-合并多个-commit" class="header-anchor">#</a> 使用 git rebase 合并多个 commit</h1> <p>日常开发或者参与开源项目时我们常常有这种情况：</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>~ <span class="token function">git</span> log
+
+commit abasdlkj<span class="token punctuation">..</span>.
+    feat<span class="token punctuation">(</span>xxx<span class="token punctuation">)</span>: 修复细节1<span class="token punctuation">..</span>.
+
+commit aksdhkja<span class="token punctuation">..</span>.
+    feat<span class="token punctuation">(</span>xxx<span class="token punctuation">)</span>: 修复细节2<span class="token punctuation">..</span>.
+<span class="token punctuation">..</span>.
+commit ajhsdhdh<span class="token punctuation">..</span>.
+    feat<span class="token punctuation">(</span>xxx<span class="token punctuation">)</span>: 支持xxx功能<span class="token punctuation">..</span>.
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><p>面对多个 commit 只为解决一个需求或 bug 时候如果直接 merge 到主分支上的话会导致主分支的 git 操作日志非常混乱，如果遇到需要代码回滚情况时根本不知道哪个 commit 做了什么，甚至在开源项目中对于后来想要参与的开发人员来说只能硬着头皮把最新的代码啃下来。</p> <p>这里介绍一下 <code>git rebase</code> 指令去如何合并多个 commit，也希望大家能在日常开发中尽量做到规范化（尤其是面向开源的项目）。</p> <h3 id="_1-查看提交历史-git-log"><a href="#_1-查看提交历史-git-log" class="header-anchor">#</a> 1 查看提交历史: git log</h3> <p>首先你要知道自己想合并的是哪几个提交，可以使用git log命令来查看提交历史，假如最近4条历史如下：</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>commit 3ca6ec340edc66df13423f36f52919dfa3<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+
+commit 1b4056686d1b494a5c86757f9eaed844<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+
+commit 53f244ac8730d33b353bee3b24210b07<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+
+commit 3a4226b4a0b6fa68783b07f1cee7b688<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>.
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="_2-git-rebase"><a href="#_2-git-rebase" class="header-anchor">#</a> 2 git rebase</h3> <p>想要合并1-3条，有两个方法</p> <ol><li>从HEAD版本开始往过去数3个版本</li></ol> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token function">git</span> rebase -i HEAD~3
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ol start="2"><li>指名要合并的版本之前的版本号</li></ol> <div class="language- line-numbers-mode"><pre class="language-text"><code>git rebase -i 3a4226b
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="_3-选取要合并的提交"><a href="#_3-选取要合并的提交" class="header-anchor">#</a> 3 选取要合并的提交</h3> <ol><li>执行了rebase命令之后，会弹出一个窗口，头几行如下：</li></ol> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>pick 3ca6ec3   <span class="token string">'注释**********'</span>
+
+pick 1b40566   <span class="token string">'注释*********'</span>
+
+pick 53f244a   <span class="token string">'注释**********'</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><ol start="2"><li>将pick改为squash或者s,之后保存并关闭文本编辑窗口即可。
+<ul><li>pick 的意思是要会执行这个 commit</li> <li>squash 的意思是这个 commit 会被合并到前一个commit
+改完之后文本内容如下：</li></ul></li></ol> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>pick 3ca6ec3   <span class="token string">'注释**********'</span>
+
+s 1b40566   <span class="token string">'注释*********'</span>
+
+s 53f244a   <span class="token string">'注释**********'</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>然后输入:wq以保存并退出。</p> <ol start="3"><li>然后保存退出，Git会压缩提交历史，如果有冲突，需要修改，修改的时候要注意，保留最新的历史，不然我们的修改就丢弃了。修改以后要记得敲下面的命令：</li></ol> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span>  
+
+<span class="token function">git</span> rebase --continue  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>如果你想放弃这次合并的话，执行以下命令：</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token function">git</span> rebase --abort  
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ol start="4"><li>如果没有冲突，或者冲突已经解决，则会出现如下的编辑窗口：</li></ol> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># This is a combination of 4 commits.  </span>
+<span class="token comment">#The first commit’s message is:  </span>
+注释<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+<span class="token comment"># The 2nd commit’s message is:  </span>
+注释<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+<span class="token comment"># The 3rd commit’s message is:  </span>
+注释<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><ol start="5"><li>输入wq保存并推出, 再次输入git log查看 commit 历史信息，你会发现这两个 commit 已经合并了。</li></ol> <h3 id="_4-推向远端"><a href="#_4-推向远端" class="header-anchor">#</a> 4 推向远端</h3> <p>如果这个分支之前已经推上过远端的话，此时需要使用 <code>git push origin xxx -f</code> 去覆盖 git 历史。</p></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">5/14/2020, 6:43:28 AM</span></div></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/blog/assets/js/app.bec953ce.js" defer></script><script src="/blog/assets/js/2.18d4f854.js" defer></script><script src="/blog/assets/js/9.8a97dc03.js" defer></script>
+  </body>
+</html>
