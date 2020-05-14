@@ -15,7 +15,7 @@ module.exports = {
         nav:[
             { text: '前端积累', link: '/web_pieces/' },
             { text: '算法积累', link: '/arithmetic/' },
-            { text: '代码块', link: '/codes/' },
+            { text: '日常积累', link: '/daily/' },
             { text: '关于我', link: '/about/' },
             { text: 'Github', link: 'https://github.com/HQ-Lin' },
         ],
@@ -27,7 +27,9 @@ module.exports = {
                 '/web_pieces/test',
             ],
             '/arithmetic/': [],
-            '/codes/': [],
+            '/daily/': [
+                '/daily/git-rebase',
+            ],
         }
     }
 };
